@@ -11,7 +11,7 @@ test=df[1:1028]
 from statsmodels.tsa.api import Holt
 
 import statsmodels.api as sm
-sm.tsa.seasonal_decompose(train.Value).plot()
+sm.tsa.seasonal_decompose(train.Value, freq=3).plot()
 result = sm.tsa.stattools.adfuller(train.Value)
 plt.show()
 
@@ -26,3 +26,8 @@ plt.plot(test['Value'], label='Test')
 plt.plot(y_hat_avg['Holt_linear'], label='Holt_linear')
 plt.legend(loc='best')
 plt.show()
+
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+rms = sqrt(mean_squared_error(test.Value, y_hat_avg.Holt_linear))
+print(rms)
